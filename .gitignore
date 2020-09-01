@@ -1,0 +1,6 @@
+cmake-build-*/
+cmake_install.cmake
+*.cbp
+.idea/
+*~
+*.o

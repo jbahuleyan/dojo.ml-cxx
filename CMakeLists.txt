@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.17)
+project(ml_cxx)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+
+find_package(Boost)
+find_package(GSL)
+find_package(Armadillo)
+find_package(Blas)
+find_package(CLBlast)
+find_package(OpenCL)
+
+include_directories(common)
+#include_directories(${Boost_INCLUDE_DIR})
+#include_directories(${GSL_INCLUDE_DIR})
+include_directories(${Armadillo_INCLUDE_DIR})
+include_directories(${CLBLAST_INCLUDE_DIR})
+include_directories(${OPENCL_INCLUDE_DIR})
+
+add_executable(ml_cxx main.cxx benchmarks/matrix_ops.cxx common/ml_common.cpp)
+add_compile_definitions(ARMA_DONT_USE_WRAPPER)
+add_compile_definitions(CL_TARGET_OPENCL_VERSION=220 CL_HPP_TARGET_OPENCL_VERSION=220)
+add_compile_definitions(CL_HPP_ENABLE_EXCEPTIONS)
+target_link_libraries(ml_cxx ${BLAS_LIBS} ${CLBLAST_LIBS} ${OPENCL_LIBS})
